@@ -91,8 +91,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Indicators\%40EMA.cs" />
     <Compile Include="Indicators\%40Indicator.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Indicators\%40MFI.cs" />
     <Compile Include="Indicators\%40SMA.cs" />
     <Compile Include="Indicators\ATSIndicatorQSBStrategyInfoBar.cs" />
     <Compile Include="Indicators\ATSIndicatorQSBStrategyVisualiser.cs" />

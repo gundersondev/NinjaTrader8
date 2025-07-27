@@ -309,7 +309,7 @@ namespace NinjaTrader.NinjaScript.Strategies
     /// <summary>
     /// ATSQuadroStrategyBase is a NinjaTrader 8 Strategy unmanaged mode trade engine base foundation for futures design and developed by Tom Leeson, MicroTrends LTd, www.microtrends.pro
     /// </summary>
-    public abstract class ATSQuadroStrategyBase : Strategy, INotifyPropertyChanged
+    public abstract class StrategyBase : Strategy, INotifyPropertyChanged
     {
         #region variables,constants,EventHandlers
         private bool isPositionCloseModeLimitExecuted = false;
@@ -461,7 +461,7 @@ namespace NinjaTrader.NinjaScript.Strategies
 
         #endregion
         #region events and overrides
-        public ATSQuadroStrategyBase()
+        public StrategyBase()
         {
             AlgoSystemBaseVersion = "2025.8.1.1";
             IsFlattenOnTransition = true;

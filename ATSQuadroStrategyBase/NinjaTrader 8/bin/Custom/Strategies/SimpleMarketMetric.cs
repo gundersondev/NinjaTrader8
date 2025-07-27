@@ -27,7 +27,7 @@ namespace NinjaTrader.NinjaScript.Strategies
         private int signalBars = 3;
         private int trailLookBackBars = 3;
         private double longStopPrice = 0, shortStopPrice = 0;
-        private int stopSize = 28;
+
         public EMA emaFast { get; set; }
         public EMA emaMedium { get; set; }
         public EMA emaSlow { get; set; }
@@ -52,7 +52,7 @@ namespace NinjaTrader.NinjaScript.Strategies
 
             if (State == State.SetDefaults)
             {
-                Description = @"SimpleMarketMetric using the StrategyBase Strategy Foundation";
+                Description = @"SimpleMarketMetric using the Base Strategy Foundation";
                 Name = "SimpleMarketMetric";
                 Fast = 10;
                 Slow = 25;
@@ -192,13 +192,13 @@ namespace NinjaTrader.NinjaScript.Strategies
 
         public override Order SubmitShort(string signal)
         {
-            orderEntry = SubmitOrderUnmanaged(0, OrderAction.SellShort, OrderType.Market, 1, 0, 0, String.Empty, signal);
+            orderEntry = SubmitOrderUnmanaged(0, OrderAction.SellShort, OrderType.Market, Quantity, 0, 0, String.Empty, signal);
             return orderEntry;
         }
 
         public override Order SubmitLong(string signal)
         {
-            orderEntry = SubmitOrderUnmanaged(0, OrderAction.Buy, OrderType.Market, 1, 0, 0, String.Empty, signal);
+            orderEntry = SubmitOrderUnmanaged(0, OrderAction.Buy, OrderType.Market, Quantity, 0, 0, String.Empty, signal);
             return orderEntry;
         }
 
@@ -210,7 +210,7 @@ namespace NinjaTrader.NinjaScript.Strategies
                 str = str.Substring(3);
                 double price = orderEntry.AverageFillPrice + (10 * base.TickSize);
                 price = base.Instrument.MasterInstrument.RoundToTickSize(price);
-                base.orderTarget1 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO1.{1}", str, oCOId), "↓Trg1" + str);
+                base.orderTarget1 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, Quantity, price, 0.0, string.Format("{0}.OCO1.{1}", str, oCOId), "↓Trg1" + str);
             }
             else if (orderEntry.OrderAction == OrderAction.SellShort)
             {
@@ -219,7 +219,7 @@ namespace NinjaTrader.NinjaScript.Strategies
                 double price = orderEntry.AverageFillPrice - (10 * base.TickSize);
                 price = base.Instrument.MasterInstrument.RoundToTickSize(price);
 
-                base.orderTarget1 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO1.{1}", str2, oCOId), "↑Trg1" + str2);
+                base.orderTarget1 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, Quantity, price, 0.0, string.Format("{0}.OCO1.{1}", str2, oCOId), "↑Trg1" + str2);
             }
         }
 
@@ -229,17 +229,19 @@ namespace NinjaTrader.NinjaScript.Strategies
             {
                 string str = (orderEntry != null) ? orderEntry.Name.Replace("↑", string.Empty) : "Long";
                 str = str.Substring(3);
-                double price = orderEntry.AverageFillPrice - (stopSize * base.TickSize);
+                //double price = orderEntry.AverageFillPrice - (stopSize * base.TickSize);
+                double price = Low[1];
                 price = base.Instrument.MasterInstrument.RoundDownToTickSize(price);
-                base.orderStop1 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO1.{1}", str, base.oCOId), "↓Stp1" + str);
+                base.orderStop1 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, Quantity, price, price, string.Format("{0}.OCO1.{1}", str, base.oCOId), "↓Stp1" + str);
             }
             else if (orderEntry.OrderAction == OrderAction.SellShort)
             {
                 string str2 = (orderEntry != null) ? orderEntry.Name.Replace("↓", string.Empty) : "Short";
                 str2 = str2.Substring(3);
-                double price = orderEntry.AverageFillPrice + (stopSize * base.TickSize);
+                double price = High[1];
+                //double price = orderEntry.AverageFillPrice + (stopSize * base.TickSize);
                 price = base.Instrument.MasterInstrument.RoundToTickSize(price);
-                base.orderStop1 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO1.{1}", str2, base.oCOId), "↑Stp1" + str2);
+                base.orderStop1 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, Quantity, price, price, string.Format("{0}.OCO1.{1}", str2, base.oCOId), "↑Stp1" + str2);
             }
         }
 
@@ -378,18 +380,26 @@ namespace NinjaTrader.NinjaScript.Strategies
         public int MaxProfitLines { get; set; }
 
         [NinjaScriptProperty]
-        [Display(Name = "Enable S/R", Order = 7, GroupName = "Support/Resistance")]
-        public bool EnableSupportResistance { get; set; }
+        [Display(Name = "Enable Chop Filter", Order = 7, GroupName = "Profit Settings")]
+        public bool EnableChopFilter { get; set; }
 
         [NinjaScriptProperty]
-        [Range(5, 100)]
-        [Display(Name = "Pivot Sensitivity", Order = 8, GroupName = "Support/Resistance")]
-        public int SupportResistanceLookback { get; set; }
+        [Display(Name = "Order Size", Order = 8, GroupName = "Risk Parameter")]
+        public int Quantity { get; set; }
 
-        [NinjaScriptProperty]
-        [Range(1, 50)]
-        [Display(Name = "Max Lines", Order = 9, GroupName = "Support/Resistance")]
-        public int MaxSupportResistanceLines { get; set; }
+        //[NinjaScriptProperty]
+        //[Display(Name = "Enable S/R", Order = 7, GroupName = "Support/Resistance")]
+        //public bool EnableSupportResistance { get; set; }
+
+        //[NinjaScriptProperty]
+        //[Range(5, 100)]
+        //[Display(Name = "Pivot Sensitivity", Order = 8, GroupName = "Support/Resistance")]
+        //public int SupportResistanceLookback { get; set; }
+
+        //[NinjaScriptProperty]
+        //[Range(1, 50)]
+        //[Display(Name = "Max Lines", Order = 9, GroupName = "Support/Resistance")]
+        //public int MaxSupportResistanceLines { get; set; }
 
         [NinjaScriptProperty]
         [Display(Name = "Enable Real Price Line", Order = 10, GroupName = "Real Price")]
@@ -459,9 +469,7 @@ namespace NinjaTrader.NinjaScript.Strategies
             set { MfiBearishColor = Serialize.StringToBrush(value); }
         }
 
-        [NinjaScriptProperty]
-        [Display(Name = "Enable Chop Filter", Order = 19, GroupName = "Dashboard")]
-        public bool EnableChopFilter { get; set; }
+
 
         #endregion
     }
