@@ -29,14 +29,14 @@ namespace NinjaTrader.NinjaScript.Strategies
     /// <summary>
     /// A quick demo using the ATSQuadroStrategyBase as a basic NT8 unmanaged mode strategy foundation
     /// </summary>
-    public class ATSSampleMACrossOver : ATSQuadroStrategyBase
+    public class ATSSampleMACrossOver : StrategyBase
     {
         private int signalBars = 3;
         private int trailLookBackBars = 3;
         private double longStopPrice = 0, shortStopPrice = 0;
         private int stopSize = 28;
-        private SMA smaFast;
-        private SMA smaSlow;
+        public SMA smaFast { get; set; }
+        public SMA smaSlow { get; set; }
 
 
         protected override void OnStateChange()
@@ -56,8 +56,8 @@ namespace NinjaTrader.NinjaScript.Strategies
             }
             else if (State == State.DataLoaded)
             {
-                smaFast = SMA(Fast);
-                smaSlow = SMA(Slow);
+                smaFast = SMA(Close, Fast);
+                smaSlow = SMA(Close, Slow);
 
                 smaFast.Plots[0].Brush = Brushes.Goldenrod;
                 smaSlow.Plots[0].Brush = Brushes.SeaGreen;
@@ -159,13 +159,13 @@ namespace NinjaTrader.NinjaScript.Strategies
 
         public override Order SubmitShort(string signal)
         {
-            orderEntry = SubmitOrderUnmanaged(0, OrderAction.SellShort, OrderType.Market, 4, 0, 0, String.Empty, signal);
+            orderEntry = SubmitOrderUnmanaged(0, OrderAction.SellShort, OrderType.Market, 1, 0, 0, String.Empty, signal);
             return orderEntry;
         }
 
         public override Order SubmitLong(string signal)
         {
-            orderEntry = SubmitOrderUnmanaged(0, OrderAction.Buy, OrderType.Market, 4, 0, 0, String.Empty, signal);
+            orderEntry = SubmitOrderUnmanaged(0, OrderAction.Buy, OrderType.Market, 1, 0, 0, String.Empty, signal);
             return orderEntry;
         }
 
@@ -182,17 +182,17 @@ namespace NinjaTrader.NinjaScript.Strategies
 
                 base.orderTarget1 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO1.{1}", str, oCOId), "↓Trg1" + str);
 
-                base.orderTarget2 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO2.{1}", str, oCOId), "↓Trg2" + str);
+                //base.orderTarget2 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO2.{1}", str, oCOId), "↓Trg2" + str);
 
 
-                price = orderEntry.AverageFillPrice + (16 * base.TickSize);
-                price = base.Instrument.MasterInstrument.RoundToTickSize(price);
+                //price = orderEntry.AverageFillPrice + (16 * base.TickSize);
+                //price = base.Instrument.MasterInstrument.RoundToTickSize(price);
 
-                base.orderTarget3 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO3.{1}", str, oCOId), "↓Trg3" + str);
+                //base.orderTarget3 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO3.{1}", str, oCOId), "↓Trg3" + str);
 
 
-                price = orderEntry.AverageFillPrice + (50 * base.TickSize);
-                price = base.Instrument.MasterInstrument.RoundToTickSize(price);
+                //price = orderEntry.AverageFillPrice + (50 * base.TickSize);
+                //price = base.Instrument.MasterInstrument.RoundToTickSize(price);
 
                 //				base.orderTarget4 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO4.{1}", str, oCOId), "↓Trg4" + str);
 
@@ -206,17 +206,17 @@ namespace NinjaTrader.NinjaScript.Strategies
 
                 base.orderTarget1 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO1.{1}", str2, oCOId), "↑Trg1" + str2);
 
-                base.orderTarget2 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO2.{1}", str2, oCOId), "↑Trg2" + str2);
+                //base.orderTarget2 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO2.{1}", str2, oCOId), "↑Trg2" + str2);
 
 
-                price = orderEntry.AverageFillPrice - (16 * base.TickSize);
-                price = base.Instrument.MasterInstrument.RoundToTickSize(price);
+                //price = orderEntry.AverageFillPrice - (16 * base.TickSize);
+                //price = base.Instrument.MasterInstrument.RoundToTickSize(price);
 
-                base.orderTarget3 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO3.{1}", str2, oCOId), "↑Trg3" + str2);
+                //base.orderTarget3 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO3.{1}", str2, oCOId), "↑Trg3" + str2);
 
 
-                price = orderEntry.AverageFillPrice - (50 * base.TickSize);
-                price = base.Instrument.MasterInstrument.RoundToTickSize(price);
+                //price = orderEntry.AverageFillPrice - (50 * base.TickSize);
+                //price = base.Instrument.MasterInstrument.RoundToTickSize(price);
 
                 //				base.orderTarget4 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, price, 0.0, string.Format("{0}.OCO4.{1}", str2, base.oCOId), "↑Trg4" + str2);
 
@@ -238,9 +238,9 @@ namespace NinjaTrader.NinjaScript.Strategies
                 price = base.Instrument.MasterInstrument.RoundDownToTickSize(price);
 
                 base.orderStop1 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO1.{1}", str, base.oCOId), "↓Stp1" + str);
-                base.orderStop2 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO2.{1}", str, base.oCOId), "↓Stp2" + str);
-                base.orderStop3 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO3.{1}", str, base.oCOId), "↓Stp3" + str);
-                base.orderStop4 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO4.{1}", str, base.oCOId), "↓Stp4" + str);
+                //base.orderStop2 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO2.{1}", str, base.oCOId), "↓Stp2" + str);
+                //base.orderStop3 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO3.{1}", str, base.oCOId), "↓Stp3" + str);
+                //base.orderStop4 = base.SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO4.{1}", str, base.oCOId), "↓Stp4" + str);
 
             }
             else if (orderEntry.OrderAction == OrderAction.SellShort)
@@ -251,9 +251,9 @@ namespace NinjaTrader.NinjaScript.Strategies
                 double price = orderEntry.AverageFillPrice + (stopSize * base.TickSize);
                 price = base.Instrument.MasterInstrument.RoundToTickSize(price);
                 base.orderStop1 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO1.{1}", str2, base.oCOId), "↑Stp1" + str2);
-                base.orderStop2 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO2.{1}", str2, base.oCOId), "↑Stp2" + str2);
-                base.orderStop3 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO3.{1}", str2, base.oCOId), "↑Stp3" + str2);
-                base.orderStop4 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO4.{1}", str2, base.oCOId), "↑Stp4" + str2);
+                //base.orderStop2 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO2.{1}", str2, base.oCOId), "↑Stp2" + str2);
+                //base.orderStop3 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO3.{1}", str2, base.oCOId), "↑Stp3" + str2);
+                //base.orderStop4 = base.SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, price, price, string.Format("{0}.OCO4.{1}", str2, base.oCOId), "↑Stp4" + str2);
 
             }
 
@@ -304,27 +304,27 @@ namespace NinjaTrader.NinjaScript.Strategies
                                 base.ChangeOrder(base.orderStop1, base.orderStop1.Quantity, this.longStopPrice, this.longStopPrice);
                             }
                         }
-                        if (base.IsOrderActiveCanChangeOrCancel(base.orderStop2))
-                        {
-                            if (this.longStopPrice > base.orderStop2.StopPrice)
-                            {
-                                base.ChangeOrder(base.orderStop2, base.orderStop2.Quantity, this.longStopPrice, this.longStopPrice);
-                            }
-                        }
-                        if (base.IsOrderActiveCanChangeOrCancel(base.orderStop3))
-                        {
-                            if (this.longStopPrice > base.orderStop3.StopPrice)
-                            {
-                                base.ChangeOrder(base.orderStop3, base.orderStop3.Quantity, this.longStopPrice, this.longStopPrice);
-                            }
-                        }
-                        if (base.IsOrderActiveCanChangeOrCancel(base.orderStop4))
-                        {
-                            if (this.longStopPrice > base.orderStop4.StopPrice)
-                            {
-                                base.ChangeOrder(base.orderStop4, base.orderStop4.Quantity, this.longStopPrice, this.longStopPrice);
-                            }
-                        }
+                        //if (base.IsOrderActiveCanChangeOrCancel(base.orderStop2))
+                        //{
+                        //    if (this.longStopPrice > base.orderStop2.StopPrice)
+                        //    {
+                        //        base.ChangeOrder(base.orderStop2, base.orderStop2.Quantity, this.longStopPrice, this.longStopPrice);
+                        //    }
+                        //}
+                        //if (base.IsOrderActiveCanChangeOrCancel(base.orderStop3))
+                        //{
+                        //    if (this.longStopPrice > base.orderStop3.StopPrice)
+                        //    {
+                        //        base.ChangeOrder(base.orderStop3, base.orderStop3.Quantity, this.longStopPrice, this.longStopPrice);
+                        //    }
+                        //}
+                        //if (base.IsOrderActiveCanChangeOrCancel(base.orderStop4))
+                        //{
+                        //    if (this.longStopPrice > base.orderStop4.StopPrice)
+                        //    {
+                        //        base.ChangeOrder(base.orderStop4, base.orderStop4.Quantity, this.longStopPrice, this.longStopPrice);
+                        //    }
+                        //}
 
 
                     }
@@ -350,27 +350,27 @@ namespace NinjaTrader.NinjaScript.Strategies
                                 base.ChangeOrder(base.orderStop1, base.orderStop1.Quantity, this.shortStopPrice, this.shortStopPrice);
                             }
                         }
-                        if (base.IsOrderActiveCanChangeOrCancel(base.orderStop2))
-                        {
-                            if (this.shortStopPrice < base.orderStop2.StopPrice)
-                            {
-                                base.ChangeOrder(base.orderStop2, base.orderStop2.Quantity, this.shortStopPrice, this.shortStopPrice);
-                            }
-                        }
-                        if (base.IsOrderActiveCanChangeOrCancel(base.orderStop3))
-                        {
-                            if (this.shortStopPrice < base.orderStop3.StopPrice)
-                            {
-                                base.ChangeOrder(base.orderStop3, base.orderStop3.Quantity, this.shortStopPrice, this.shortStopPrice);
-                            }
-                        }
-                        if (base.IsOrderActiveCanChangeOrCancel(base.orderStop4))
-                        {
-                            if (this.shortStopPrice < base.orderStop4.StopPrice)
-                            {
-                                base.ChangeOrder(base.orderStop4, base.orderStop4.Quantity, this.shortStopPrice, this.shortStopPrice);
-                            }
-                        }
+                        //if (base.IsOrderActiveCanChangeOrCancel(base.orderStop2))
+                        //{
+                        //    if (this.shortStopPrice < base.orderStop2.StopPrice)
+                        //    {
+                        //        base.ChangeOrder(base.orderStop2, base.orderStop2.Quantity, this.shortStopPrice, this.shortStopPrice);
+                        //    }
+                        //}
+                        //if (base.IsOrderActiveCanChangeOrCancel(base.orderStop3))
+                        //{
+                        //    if (this.shortStopPrice < base.orderStop3.StopPrice)
+                        //    {
+                        //        base.ChangeOrder(base.orderStop3, base.orderStop3.Quantity, this.shortStopPrice, this.shortStopPrice);
+                        //    }
+                        //}
+                        //if (base.IsOrderActiveCanChangeOrCancel(base.orderStop4))
+                        //{
+                        //    if (this.shortStopPrice < base.orderStop4.StopPrice)
+                        //    {
+                        //        base.ChangeOrder(base.orderStop4, base.orderStop4.Quantity, this.shortStopPrice, this.shortStopPrice);
+                        //    }
+                        //}
 
                     }
                 }

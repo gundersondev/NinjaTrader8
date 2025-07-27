@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NinjaTrader.Custom</RootNamespace>
-    <AssemblyName>ATS.NinjaTrader8.QuadroStrategyBase</AssemblyName>
+    <AssemblyName>NinjaTrader8.StrategyBase</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -24,7 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DocumentationFile>bin\Debug\ATS.NinjaTrader8.QuadroStrategyBase.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\NinjaTrader8.StrategyBase.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <LangVersion>5</LangVersion>
   </PropertyGroup>
@@ -35,7 +35,7 @@
     <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\ATS.NinjaTrader8.QuadroStrategyBase.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\NinjaTrader8.StrategyBase.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -45,6 +45,9 @@
     <LangVersion>5</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NinjaTrader.Custom">
+      <HintPath>..\..\..\..\..\..\NinjaTrader 8\bin\Custom\NinjaTrader.Custom.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -90,8 +93,10 @@
   <ItemGroup>
     <Compile Include="Indicators\%40Indicator.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Indicators\%40SMA.cs" />
     <Compile Include="Indicators\ATSIndicatorQSBStrategyInfoBar.cs" />
     <Compile Include="Indicators\ATSIndicatorQSBStrategyVisualiser.cs" />
+    <Compile Include="Indicators\SimpleMarketMetricIndicator.cs" />
     <Compile Include="MarketAnalyzerColumns\%40MarketAnalyzerColumn.cs" />
     <Compile Include="Strategies\%40Strategy.cs" />
     <Compile Include="Strategies\AlgoSystemBase.cs" />
@@ -106,8 +111,7 @@
     </Compile>
     <Compile Include="Strategies\ATSQuadroStrategyBase.GUI\UserControlNinjaBuddy.xaml.txt.cs" />
     <Compile Include="Strategies\ATSSampleMACrossOver.cs" />
-    <Compile Include="Strategies\ATSSamplePriceReversalTest.cs" />
-    <Compile Include="Strategies\ATSSamplePriceReversalTestHybridAlgo.cs" />
+    <Compile Include="Strategies\SimpleMarketMetric.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AddOns\" />

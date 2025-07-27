@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NinjaTrader8.StrategyBase</name>
+    </assembly>
+    <members>
+        <member name="T:NinjaTrader.NinjaScript.Indicators.SMA">
+            <summary>
+            The SMA (Simple Moving Average) is an indicator that shows the average value of a security's price over a period of time.
+            </summary>
+        </member>
+        <member name="T:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase">
+            <summary>
+            ATSQuadroStrategyBase is a NinjaTrader 8 Strategy unmanaged mode trade engine base foundation for futures design and developed by Tom Leeson, MicroTrends LTd, www.microtrends.pro
+            </summary>
+        </member>
+        <member name="F:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.ordersActiveLockObject">
+            <summary>
+            Role of ordersActiveLockObject: As a Public List OrdersActive requires us to lock on a seperate object token rather than the List object itself. 
+            </summary>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.OnStrategyTradeWorkFlowUpdated(NinjaTrader.NinjaScript.Strategies.StrategyTradeWorkFlowUpdatedEventArgs)">
+            <summary>
+            OnStrategyTradeWorkFlowUpdated
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.PreTradeValidateNoActiveOrdersExist">
+            <summary>
+            PreTradeValidateNoActiveOrdersExist for working or active orders and returns true if none are found - all clear is true - returns false if orders are found
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.PreTradeValidatePositionIsFlat">
+            <summary>
+            PreTradeValidatePositionIsFlat checks and returns true if Position.Quantity==0 - returns false if not
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.PreTradeValidateCanEnterTrade(System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            preTradeValidateCanEnterTrade - returns true if PreTradeValidateNoActiveOrdersExist and PreTradeValidatePositionIsFlat are true - returns false if not.
+            Can be overidden in derived child class so that a user/developer defined set of conditions can be assessed to allow or prevent a trade entry.
+            isPositionCloseModeLimit is for the close mode IsPositionCloseModeLimit 
+            isByPassCheckAtClient avoids derived client end validation checks and bypass - useful for user actions that bypass validation or special circumstance
+            </summary>
+            <param name="isLong"></param>
+            <param name="isPositionCloseModeLimitExecuted"></param>
+            <param name="isByPassCheckAtClient"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.OnExitOnCloseDetected">
+            <summary>
+            OnExitOnCloseDetected() called when exit on close order has been detected from NT
+            </summary>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.IsOrdersActiveExist(System.Collections.Generic.IEnumerable{NinjaTrader.Cbi.Order},System.Boolean)">
+            <summary>
+            Checks for active orders in an list/arry/collection of Orders - Param isToCopy will make a copy to negate need for locking byref
+            </summary>
+            <param name="ordersActive"></param>
+            <param name="isToCopy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.TradeWorkFlowErrorProcess(System.Boolean)">
+            <summary>
+            TradeWorkFlowErrorProcess Set and start error workflow for immediate or deffered process /pseudo Async - allows caller to return
+            </summary>
+            <param name="forceImmediate"></param>
+        </member>
+        <member name="M:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBase.TechRAVG(System.Int32,System.Int32)">
+            <summary>
+            returns the points average range in points of the last n bars
+            </summary>
+            <param name="period"></param>
+            <param name="barsArrayIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="T:NinjaTrader.NinjaScript.Strategies.AlgoSystemOrdersLayerBase">
+            <summary>
+            AlgoSystemOrdersLayerBase contains plain old order types market,limit, stop entry properties and methods as base class usage for strategies requiring simple order types 
+            </summary>
+        </member>
+        <member name="T:NinjaTrader.NinjaScript.Strategies.ATSQuadroStrategyBaseTradeManLayerBase">
+            <summary>
+            ATSQuadroStrategyBaseTradeManLayerBase contains trade management properties and methods as base class usage for strategies requiring off the shelf position management etc
+            </summary>
+        </member>
+        <member name="T:NinjaTrader.NinjaScript.Strategies.AlgoSystemTradingRulesLayerBase">
+            <summary>
+            AlgoSystemSystemRulesLayerBase contains Trade entry, Trade filter and  Trade exit and Trade properties and  methods as base class usage for strategies requiring simple user defined logic and off the shelf features
+            </summary>
+        </member>
+        <member name="T:NinjaTrader.NinjaScript.Strategies.AlgoSystemTradingUILayerBase">
+            <summary>
+            AlgoSystemTradingUILayerBase contains hybrid algo trading user intreface control features for realtime trading interaction for fuly and semi automated modes.
+            </summary>
+            <summary>
+            AlgoSystemTradingUILayerBase contains properties, fields etc of partial class
+            </summary>
+        </member>
+        <member name="T:NinjaTrader.NinjaScript.Strategies.ATSSampleMACrossOver">
+            <summary>
+            A quick demo using the ATSQuadroStrategyBase as a basic NT8 unmanaged mode strategy foundation
+            </summary>
+        </member>
+        <member name="T:ATSQuadroStrategyBase.GUI.UserControlNinjaBuddy">
+            <summary>
+            Interaction logic and AutoGen xamnl load and bind  for UserControlNinjaBuddy.xaml
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -38,7 +38,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.WpfPropertyGrid">
-      <HintPath>C:\Program Files (x86)\NinjaTrader 8\bin\System.Windows.Controls.WpfPropertyGrid.dll</HintPath>
+      <HintPath>&quot;C:\Program Files\NinjaTrader 8\bin\System.Windows.Controls.WpfPropertyGrid.dll&quot;</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />

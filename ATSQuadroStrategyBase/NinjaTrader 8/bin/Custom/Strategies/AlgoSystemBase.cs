@@ -463,7 +463,7 @@ namespace NinjaTrader.NinjaScript.Strategies
         #region events and overrides
         public ATSQuadroStrategyBase()
         {
-            AlgoSystemBaseVersion = "2022.8.4.1";
+            AlgoSystemBaseVersion = "2025.8.1.1";
             IsFlattenOnTransition = true;
             IsOnStrategyTradeWorkFlowStateEntryRejectionError = true;
             IsOrderCancelInspectEachOrDoBatchCancel = true;
@@ -493,8 +493,8 @@ namespace NinjaTrader.NinjaScript.Strategies
                 switch (State)
                 {
                     case State.SetDefaults:
-                        Description = @"ATS.NT8.QuadroStrategyBase";
-                        Name = "ATS.NT8.QuadroStrategyBase";
+                        Description = @"NT8.StrategyBase";
+                        Name = "NT8.StrategyBase";
                         Calculate = Calculate.OnBarClose;
                         EntriesPerDirection = 1;
                         EntryHandling = EntryHandling.AllEntries;
@@ -516,7 +516,7 @@ namespace NinjaTrader.NinjaScript.Strategies
                         MaximumBarsLookBack = MaximumBarsLookBack.Infinite;
                         IgnoreOverfill = true;
                         IsUnmanaged = true;
-                        this.DefaultQuantity = 4;
+                        this.DefaultQuantity = 1;
 
                         IsFlattenOnTransition = true;
                         IsOnStrategyTradeWorkFlowStateEntryRejectionError = true;
@@ -3990,18 +3990,18 @@ namespace NinjaTrader.NinjaScript.Strategies
                 string orderEntryName = orderEntry != null ? orderEntry.Name.Replace(arrowUp, string.Empty) : "Long";
                 orderEntryName = orderEntryName.Substring(3);
                 orderTarget1 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, orderEntry.AverageFillPrice + 6 * TickSize, 0, orderEntryName + ".OCO1." + oCOId, arrowDown + target1Name + orderEntryName);
-                orderTarget2 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, orderEntry.AverageFillPrice + 10 * TickSize, 0, orderEntryName + ".OCO2." + oCOId, arrowDown + target2Name + orderEntryName);
-                orderTarget3 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, orderEntry.AverageFillPrice + 16 * TickSize, 0, orderEntryName + ".OCO3." + oCOId, arrowDown + target3Name + orderEntryName);
-                orderTarget4 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, orderEntry.AverageFillPrice + 24 * TickSize, 0, orderEntryName + ".OCO4." + oCOId, arrowDown + target4Name + orderEntryName);
+                //orderTarget2 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, orderEntry.AverageFillPrice + 10 * TickSize, 0, orderEntryName + ".OCO2." + oCOId, arrowDown + target2Name + orderEntryName);
+                //orderTarget3 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, orderEntry.AverageFillPrice + 16 * TickSize, 0, orderEntryName + ".OCO3." + oCOId, arrowDown + target3Name + orderEntryName);
+                //orderTarget4 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.Limit, 1, orderEntry.AverageFillPrice + 24 * TickSize, 0, orderEntryName + ".OCO4." + oCOId, arrowDown + target4Name + orderEntryName);
             }
             else if (orderEntry.OrderAction == OrderAction.SellShort)
             {
                 string orderEntryName = orderEntry != null ? orderEntry.Name.Replace(arrowDown, string.Empty) : "Short";
                 orderEntryName = orderEntryName.Substring(3);
                 orderTarget1 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, orderEntry.AverageFillPrice - 6 * TickSize, 0, orderEntryName + ".OCO1." + oCOId, arrowUp + target1Name + orderEntryName);
-                orderTarget2 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, orderEntry.AverageFillPrice - 10 * TickSize, 0, orderEntryName + ".OCO2." + oCOId, arrowUp + target2Name + orderEntryName);
-                orderTarget3 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, orderEntry.AverageFillPrice - 16 * TickSize, 0, orderEntryName + ".OCO3." + oCOId, arrowUp + target3Name + orderEntryName);
-                orderTarget4 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, orderEntry.AverageFillPrice - 24 * TickSize, 0, orderEntryName + ".OCO4." + oCOId, arrowUp + target4Name + orderEntryName);
+                //orderTarget2 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, orderEntry.AverageFillPrice - 10 * TickSize, 0, orderEntryName + ".OCO2." + oCOId, arrowUp + target2Name + orderEntryName);
+                //orderTarget3 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, orderEntry.AverageFillPrice - 16 * TickSize, 0, orderEntryName + ".OCO3." + oCOId, arrowUp + target3Name + orderEntryName);
+                //orderTarget4 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.Limit, 1, orderEntry.AverageFillPrice - 24 * TickSize, 0, orderEntryName + ".OCO4." + oCOId, arrowUp + target4Name + orderEntryName);
             }
         }
 
@@ -4016,9 +4016,9 @@ namespace NinjaTrader.NinjaScript.Strategies
                 orderEntryName = orderEntryName.Substring(3);
 
                 orderStop1 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, orderEntry.AverageFillPrice - 16 * TickSize, orderEntry.AverageFillPrice - 16 * TickSize, orderEntryName + ".OCO1." + oCOId, arrowDown + stop1Name + orderEntryName);
-                orderStop2 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, orderEntry.AverageFillPrice - 18 * TickSize, orderEntry.AverageFillPrice - 16 * TickSize, orderEntryName + ".OCO2." + oCOId, arrowDown + stop2Name + orderEntryName);
-                orderStop3 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, orderEntry.AverageFillPrice - 20 * TickSize, orderEntry.AverageFillPrice - 16 * TickSize, orderEntryName + ".OCO3." + oCOId, arrowDown + stop3Name + orderEntryName);
-                orderStop4 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, orderEntry.AverageFillPrice - 22 * TickSize, orderEntry.AverageFillPrice - 16 * TickSize, orderEntryName + ".OCO4." + oCOId, arrowDown + stop4Name + orderEntryName);
+                //orderStop2 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, orderEntry.AverageFillPrice - 18 * TickSize, orderEntry.AverageFillPrice - 16 * TickSize, orderEntryName + ".OCO2." + oCOId, arrowDown + stop2Name + orderEntryName);
+                //orderStop3 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, orderEntry.AverageFillPrice - 20 * TickSize, orderEntry.AverageFillPrice - 16 * TickSize, orderEntryName + ".OCO3." + oCOId, arrowDown + stop3Name + orderEntryName);
+                //orderStop4 = SubmitOrderUnmanaged(0, OrderAction.Sell, OrderType.StopMarket, 1, orderEntry.AverageFillPrice - 22 * TickSize, orderEntry.AverageFillPrice - 16 * TickSize, orderEntryName + ".OCO4." + oCOId, arrowDown + stop4Name + orderEntryName);
             }
             else if (orderEntry.OrderAction == OrderAction.SellShort)
             {
@@ -4026,9 +4026,9 @@ namespace NinjaTrader.NinjaScript.Strategies
                 orderEntryName = orderEntryName.Substring(3);
 
                 orderStop1 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, orderEntry.AverageFillPrice + 16 * TickSize, orderEntry.AverageFillPrice + 16 * TickSize, orderEntryName + ".OCO1." + oCOId, arrowUp + stop1Name + orderEntryName);
-                orderStop2 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, orderEntry.AverageFillPrice + 18 * TickSize, orderEntry.AverageFillPrice + 16 * TickSize, orderEntryName + ".OCO2." + oCOId, arrowUp + stop2Name + orderEntryName);
-                orderStop3 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, orderEntry.AverageFillPrice + 20 * TickSize, orderEntry.AverageFillPrice + 16 * TickSize, orderEntryName + ".OCO3." + oCOId, arrowUp + stop3Name + orderEntryName);
-                orderStop4 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, orderEntry.AverageFillPrice + 22 * TickSize, orderEntry.AverageFillPrice + 16 * TickSize, orderEntryName + ".OCO4." + oCOId, arrowUp + stop4Name + orderEntryName);
+                //orderStop2 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, orderEntry.AverageFillPrice + 18 * TickSize, orderEntry.AverageFillPrice + 16 * TickSize, orderEntryName + ".OCO2." + oCOId, arrowUp + stop2Name + orderEntryName);
+                //orderStop3 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, orderEntry.AverageFillPrice + 20 * TickSize, orderEntry.AverageFillPrice + 16 * TickSize, orderEntryName + ".OCO3." + oCOId, arrowUp + stop3Name + orderEntryName);
+                //orderStop4 = SubmitOrderUnmanaged(0, OrderAction.BuyToCover, OrderType.StopMarket, 1, orderEntry.AverageFillPrice + 22 * TickSize, orderEntry.AverageFillPrice + 16 * TickSize, orderEntryName + ".OCO4." + oCOId, arrowUp + stop4Name + orderEntryName);
             }
         }
 
